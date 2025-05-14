@@ -64,6 +64,5 @@ exports.getProductView = (request, response) => {
 exports.deleteProduct = (request, response) => {
   const name = request.params.name;
   Product.deleteByName(name);
-
   response.status(STATUS_CODE.OK).json({ success: true });
 };
