@@ -1,4 +1,5 @@
 const express = require("express");
+const { mongoConnect } = require("./database");
 const bodyParser = require("body-parser");
 const path = require("path");
 
@@ -44,4 +45,8 @@ app.use((request, response) => {
   logger.getErrorLog(url);
 });
 
-app.listen(PORT);
+mongoConnect(() => {
+  app.listen(3000, () => {
+    console.log("Server is running on http://localhost:3000");
+  });
+});

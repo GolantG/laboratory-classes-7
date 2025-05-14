@@ -5,9 +5,9 @@ const { STATUS_CODE } = require("../constants/statusCode");
 
 const cartController = require("./cartController");
 
-exports.getProductsView = (request, response) => {
+exports.getProductsView = async (request, response) => {
   const cartCount = cartController.getProductsCount();
-  const products = Product.getAll();
+  const products = await Product.getAll();
 
   response.render("products.ejs", {
     headTitle: "Shop - Products",
@@ -31,9 +31,9 @@ exports.getAddProductView = (request, response) => {
   });
 };
 
-exports.getNewProductView = (request, response) => {
+exports.getNewProductView = async (request, response) => {
   const cartCount = cartController.getProductsCount();
-  const newestProduct = Product.getLast();
+  const newestProduct = await Product.getLast();
 
   response.render("new-product.ejs", {
     headTitle: "Shop - New product",
@@ -64,5 +64,7 @@ exports.getProductView = (request, response) => {
 exports.deleteProduct = (request, response) => {
   const name = request.params.name;
   Product.deleteByName(name);
+
   response.status(STATUS_CODE.OK).json({ success: true });
 };
+
